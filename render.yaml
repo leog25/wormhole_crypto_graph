@@ -21,7 +21,7 @@ services:
     buildCommand: |
       cd frontend && \
       npm install && \
-      sed -i "s|%WS_URL%|wss://wormhole-tracker-backend.onrender.com|g" index.html && \
+      sed -i "s|%WS_URL%|wss://wormhole-tracker-backend-1fu0.onrender.com|g" index.html && \
       npm run build
     staticPublishPath: frontend/dist
     autoDeploy: true 
