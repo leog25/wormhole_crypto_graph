@@ -2,7 +2,8 @@ services:
   - type: web
     name: wormhole-tracker-backend
     env: docker
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./backend/Dockerfile
+    rootDir: .
     plan: free
     healthCheckPath: /health
     autoDeploy: true
@@ -16,9 +17,6 @@ services:
 
   - type: static
     name: wormhole-tracker-frontend
-    buildCommand: cd frontend && npm install && npm run build
-    publish: frontend
-    autoDeploy: true
-    envVars:
-      - key: WS_URL
-        value: wss://wormhole-tracker-backend.onrender.com 
+    buildCommand: cd frontend && npm install && WS_URL=wss://wormhole-tracker-backend.onrender.com npm run build
+    publish: frontend/dist
+    autoDeploy: true 

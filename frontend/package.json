@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Building frontend...\""
+    "build": "mkdir -p dist && cp styles.css script.js data.json dist/ && sed \"s|%WS_URL%|${WS_URL}|g\" index.html > dist/index.html"
   },
   "keywords": [],
   "author": "",

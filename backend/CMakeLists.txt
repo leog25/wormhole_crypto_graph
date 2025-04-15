@@ -17,14 +17,9 @@ find_package(cpr CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(uWebSockets CONFIG REQUIRED)
 
 include_directories(${CMAKE_PREFIX_PATH}/include)
-
-# Find uWebSockets
-find_library(USOCKETS_LIB uSockets REQUIRED)
-find_path(UWEBSOCKETS_INCLUDE_DIR uWebSockets/App.h REQUIRED)
-
-include_directories(${UWEBSOCKETS_INCLUDE_DIR})
 
 add_executable(wormhole_tracker main.cpp)
 
@@ -34,6 +29,6 @@ target_link_libraries(wormhole_tracker PRIVATE
     OpenSSL::SSL
     OpenSSL::Crypto
     ZLIB::ZLIB
-    ${USOCKETS_LIB}
+    uWebSockets::uWebSockets
     pthread
 )

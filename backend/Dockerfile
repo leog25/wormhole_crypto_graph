@@ -27,15 +27,7 @@ RUN ./vcpkg/vcpkg install cpr:x64-linux && \
     ./vcpkg/vcpkg install nlohmann-json:x64-linux && \
     ./vcpkg/vcpkg install openssl:x64-linux && \
     ./vcpkg/vcpkg install zlib:x64-linux && \
-    ./vcpkg/vcpkg install usockets:x64-linux
-
-# Install uWebSockets
-RUN git clone https://github.com/uNetworking/uWebSockets.git && \
-    cd uWebSockets && \
-    git checkout v20.51.0 && \
-    cd uSockets && \
-    make && \
-    make install
+    ./vcpkg/vcpkg install uwebsockets:x64-linux
 
 # Set working directory for the application
 WORKDIR /app
@@ -64,7 +56,6 @@ RUN useradd -m -u 1000 appuser
 # Copy built application from builder stage
 COPY --from=builder /app/build/wormhole_tracker /app/wormhole_tracker
 COPY --from=builder /opt/vcpkg/installed/x64-linux/lib/* /usr/local/lib/
-COPY --from=builder /usr/local/lib/libuSockets.so /usr/local/lib/
 
 # Set proper permissions
 RUN chown -R appuser:appuser /app
