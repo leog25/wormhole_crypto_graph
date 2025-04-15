@@ -29,13 +29,12 @@ RUN ./vcpkg/vcpkg install cpr:x64-linux && \
     ./vcpkg/vcpkg install zlib:x64-linux && \
     ./vcpkg/vcpkg install usockets:x64-linux
 
-# Clone and install uWebSockets
+# Install uWebSockets
 RUN git clone https://github.com/uNetworking/uWebSockets.git && \
     cd uWebSockets && \
     git checkout v20.51.0 && \
-    mkdir build && cd build && \
-    cmake .. && \
-    make -j$(nproc) && \
+    cd uSockets && \
+    make && \
     make install
 
 # Set working directory for the application
