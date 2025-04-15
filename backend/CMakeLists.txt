@@ -17,7 +17,7 @@ find_package(cpr CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(OpenSSL REQUIRED)
 find_package(ZLIB REQUIRED)
-find_package(uWebSockets CONFIG REQUIRED)
+find_package(unofficial-uwebsockets CONFIG REQUIRED)
 
 include_directories(${CMAKE_PREFIX_PATH}/include)
 
@@ -29,6 +29,6 @@ target_link_libraries(wormhole_tracker PRIVATE
     OpenSSL::SSL
     OpenSSL::Crypto
     ZLIB::ZLIB
-    uWebSockets::uWebSockets
+    unofficial::uwebsockets::uwebsockets
     pthread
 )
