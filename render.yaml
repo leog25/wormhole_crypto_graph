@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: wormhole-tracker-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: VCPKG_ROOT
+        value: /opt/vcpkg
+
+  - type: static
+    name: wormhole-tracker-frontend
+    buildCommand: cd frontend && npm install
+    publish: frontend
+    autoDeploy: true 
