@@ -1,11 +1,21 @@
 import { UnrealBloomPass } from 'https://esm.sh/three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import * as d3 from 'https://cdn.skypack.dev/d3';
 
-const WS_URL = window.__ENV__.WS_URL || 'ws://localhost:9001';
+// Dynamically determine WebSocket URL based on current hostname
+const getWebSocketUrl = () => {
+  if (window.location.hostname === 'localhost') {
+    return 'ws://localhost:9001';
+  }
+  // Replace 'frontend' with 'backend' in the hostname
+  const backendHostname = window.location.hostname.replace('frontend', 'backend');
+  return `wss://${backendHostname}`;
+};
+
+const WS_URL = getWebSocketUrl();
 const socket = new WebSocket(WS_URL);
 
 socket.onopen = () => {
-  console.log("WebSocket connected.");
+  console.log("WebSocket connected to:", WS_URL);
 };
 
 function getRandomColor() {
