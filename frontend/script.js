@@ -6,7 +6,8 @@ const WEBSOCKET_URL = window.location.hostname === 'localhost'
   ? 'ws://localhost:9001'
   : `wss://${window.location.hostname.replace('wormhole-tracker-frontend', 'wormhole-tracker-backend')}`;
 
-const socket = new WebSocket(WEBSOCKET_URL);
+const WS_URL = process.env.WS_URL || WEBSOCKET_URL;
+const socket = new WebSocket(WS_URL);
 
 socket.onopen = () => {
   console.log("WebSocket connected.");

@@ -11,7 +11,7 @@
 #include <set>
 #include <mutex>
 #include <uwebsockets/App.h>
-
+#include <cstdlib>  
 
 using json = nlohmann::json;
 
@@ -67,8 +67,10 @@ struct WebSocketData {
 std::set<uWS::WebSocket<false, true, WebSocketData>*> clients;
 std::mutex clientsMutex;
 
-
 int main() {
+    const char* portStr = std::getenv("PORT");
+    int port = portStr ? std::atoi(portStr) : 9001;
+    
     std::unordered_map<std::string, ChainPair> transactions;
     
     std::cout << "Fetching Wormhole transaction data every second...\n";
@@ -182,15 +184,17 @@ int main() {
             clients.erase(ws);
             std::cout << "Client disconnected.\n";
         }
-    }).listen(9001, [](auto* token) {
+    }).get("/health", [](auto* res, auto* req) {
+        res->writeStatus("200 OK");
+        res->end("OK");
+    }).listen(port, [port](auto* token) {
         if (token) {
-            std::cout << "WebSocket server listening on port 9001\n";
+            std::cout << "WebSocket server listening on port " << port << "\n";
         } else {
-            std::cerr << "Failed to listen on port 9001\n";
+            std::cerr << "Failed to listen on port " << port << "\n";
         }
     }).run();
 
-    
     return 0;
 }
 

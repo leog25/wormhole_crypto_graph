@@ -2,16 +2,23 @@ services:
   - type: web
     name: wormhole-tracker-backend
     env: docker
-    dockerfilePath: ./backend/Dockerfile
+    dockerfilePath: ./Dockerfile
     plan: free
-    healthCheckPath: /
+    healthCheckPath: /health
     autoDeploy: true
     envVars:
       - key: VCPKG_ROOT
         value: /opt/vcpkg
+      - key: PORT
+        value: 9001
+      - key: NODE_ENV
+        value: production
 
   - type: static
     name: wormhole-tracker-frontend
-    buildCommand: cd frontend && npm install
+    buildCommand: cd frontend && npm install && npm run build
     publish: frontend
-    autoDeploy: true 
+    autoDeploy: true
+    envVars:
+      - key: WS_URL
+        value: wss://wormhole-tracker-backend.onrender.com 
