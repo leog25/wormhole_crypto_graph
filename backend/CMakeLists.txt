@@ -20,7 +20,11 @@ find_package(ZLIB REQUIRED)
 
 include_directories(${CMAKE_PREFIX_PATH}/include)
 
-find_library(USOCKETS_LIB uSockets PATHS "${CMAKE_PREFIX_PATH}/lib" REQUIRED)
+# Find uWebSockets
+find_library(USOCKETS_LIB uSockets REQUIRED)
+find_path(UWEBSOCKETS_INCLUDE_DIR uWebSockets/App.h REQUIRED)
+
+include_directories(${UWEBSOCKETS_INCLUDE_DIR})
 
 add_executable(wormhole_tracker main.cpp)
 
