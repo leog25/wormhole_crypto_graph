@@ -1,19 +1,12 @@
 import { UnrealBloomPass } from 'https://esm.sh/three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import * as d3 from 'https://cdn.skypack.dev/d3';
 
-
-const WEBSOCKET_URL = window.location.hostname === 'localhost' 
-  ? 'ws://localhost:9001'
-  : `wss://${window.location.hostname.replace('wormhole-tracker-frontend', 'wormhole-tracker-backend')}`;
-
-const WS_URL = process.env.WS_URL || WEBSOCKET_URL;
+const WS_URL = window.__ENV__.WS_URL || 'ws://localhost:9001';
 const socket = new WebSocket(WS_URL);
 
 socket.onopen = () => {
   console.log("WebSocket connected.");
 };
-
-
 
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
@@ -29,7 +22,6 @@ fetch('data.json')
   .then(data => {
     data.nodes.forEach(node => {
       if (node.x !== undefined && node.y !== undefined && node.z !== undefined) {
-
         const scale = 100; 
         
         node.fx = node.x * scale;
@@ -71,7 +63,6 @@ fetch('data.json')
 
     Graph.onLinkClick(Graph.emitParticle); 
 
-
     const bloomPass = new UnrealBloomPass();
     bloomPass.strength = 4;
     bloomPass.radius = 1;
@@ -84,13 +75,11 @@ fetch('data.json')
       2000                         
     );
     
- 
     const graphScene = Graph.scene();
     graphScene.rotation.x = -1 *Math.PI / 2;
     graphScene.rotation.y = 0;
     graphScene.rotation.z = 0; 
 
-   
     socket.onmessage = (event) => {
       try {
         const msg = JSON.parse(event.data);
