@@ -15,8 +15,9 @@ services:
       - key: NODE_ENV
         value: production
 
-  - type: static
+  - type: web
     name: wormhole-tracker-frontend
+    env: static
     buildCommand: cd frontend && npm install && WS_URL=wss://wormhole-tracker-backend.onrender.com npm run build
-    publish: frontend/dist
+    staticPublishPath: frontend/dist
     autoDeploy: true 
