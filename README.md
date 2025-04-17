@@ -2,6 +2,8 @@
 
 A real-time visualization of Wormhole blockchain transactions using 3D Force Graph.
 
+![Alt text](cryptoproj.png)
+
 ## Project Structure
 
 ```
